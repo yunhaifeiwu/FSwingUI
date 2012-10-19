@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<EDM>
-    <Items>
-        <Item Title="qq" FilePath="" PageIndex="0" nImage="0" nSelectedImage="0">
-            <Item Title="核心" FilePath=".\other\核心.edx" PageIndex="0" nImage="2" nSelectedImage="2" />
-        </Item>
-    </Items>
-</EDM>
