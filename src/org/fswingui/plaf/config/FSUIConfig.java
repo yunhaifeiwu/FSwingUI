@@ -15,7 +15,6 @@ import org.fswingui.plaf.SubjectEntity;
  */
 public interface FSUIConfig {
     public static String configName="cfg/lookandfeel/subjectStock.json";
-//    public static String configName="subjectStock.json";
 //    public Map<String,SubjectEntityConfig> toConfig(Map<String,SubjectEntity> map);
 //    public Map<String,SubjectEntity> fromConfig(Map<String,SubjectEntityConfig> map);
     public boolean readConfig(String filePathName);
