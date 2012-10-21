@@ -124,9 +124,10 @@ public class UIEngine {
     }
         
     public static FSUIConfig getConfig() {
+        
         if(config==null) {
             config=new JsonConfig();
-        }        
+        }     
         return config;
     }
     

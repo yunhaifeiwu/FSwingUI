@@ -8,10 +8,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -37,6 +42,7 @@ import org.fswingui.plaf.tools.paint.AbstractPaint;
 import org.fswingui.plaf.tools.paint.BaseParameterCoding;
 import org.fswingui.plaf.tools.paint.Parameter;
 import org.fswingui.tools.frame.model.config.FGuiConfig;
+import org.fswingui.tools.frame.part.extra.StylePanelExtra;
 import org.fswingui.utilities.Utility;
 
 /**
@@ -139,32 +145,12 @@ public abstract class AbstractFSUIConfig implements FSUIConfig{
     
     @Override
     public boolean readConfig(String filePathName){
-        Logger log = Logger.getLogger(AbstractFSUIConfig.class.getName());  
-        log.setLevel(Level.INFO);  
-          
-        FileHandler fileHandler = null;  
-        try {
-            fileHandler = new FileHandler("E:/testlog%g.log", true);
-        } catch (IOException ex) {
-            Logger.getLogger(AbstractFSUIConfig.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SecurityException ex) {
-            Logger.getLogger(AbstractFSUIConfig.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        fileHandler.setLevel(Level.SEVERE);  
-        fileHandler.setFormatter(new Formatter(){  
-            public String format(LogRecord record)  {  
-                SimpleDateFormat sd = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");    
-                String d = sd.format(new Date());    
-                return d + record.getLevel() + ":" + record.getMessage() + "/n";  
-            }  
-         });  
-        log.addHandler(fileHandler);  
-        try {
+       
+  
             if (filePathName==null ||  "".equals(filePathName)) return false;
-            URI uri = (ClassLoader.getSystemResource("")).toURI();
-            String ss=uri.getPath();
-            String[] strs=ss.split("/\\w*/\\w*/\\w*\\w*$");
-            File f=new File(strs[0]+"/"+filePathName);
+            JsonConfig.test1("AbstractFSUIConfig======read==file==前");
+            
+            File f=new File(filePathName);
             if(!f.exists()) {
                 if (fileChooser==null) fileChooser=new JFileChooser();
                 FileNameExtensionFilter  ff=
@@ -178,18 +164,14 @@ public abstract class AbstractFSUIConfig implements FSUIConfig{
                     filePathName=f.getName();
                 }
             }
+            JsonConfig.test1("AbstractFSUIConfig======readConfigImpl==前");
             return readConfigImpl(filePathName);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(AbstractFSUIConfig.class.getName()).log(Level.SEVERE, null, ex);
-            StringWriter sw = new StringWriter();  
-            ex.printStackTrace(new PrintWriter(sw));  
-            log.severe(sw.toString());  
-            return false;
-        }
+        
         
     }
     @Override
     public boolean writeConfig(String filePathName){
+       
         if (filePathName==null ||  "".equals(filePathName)) return false;
         String[] strs=filePathName.split("/\\w*\\.\\w*$");
        
@@ -197,7 +179,7 @@ public abstract class AbstractFSUIConfig implements FSUIConfig{
         if(!f.exists()){            
             f.mkdirs();
         }   
-  
+        
         return writeConfigImpl(filePathName);
     }
    
