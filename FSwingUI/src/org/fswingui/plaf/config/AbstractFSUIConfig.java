@@ -9,28 +9,42 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.Utilities;
 import org.fswingui.plaf.SubjectEntity;
 import org.fswingui.plaf.UIEngine;
 import org.fswingui.plaf.tools.paint.AbstractPaint;
 import org.fswingui.plaf.tools.paint.BaseParameterCoding;
 import org.fswingui.plaf.tools.paint.Parameter;
-import org.fswingui.utility.Utility;
+import org.fswingui.tools.frame.model.config.FGuiConfig;
+import org.fswingui.utilities.Utility;
 
 /**
  *
  * @author Administrator
  */
 public abstract class AbstractFSUIConfig implements FSUIConfig{
+    
     public final static String SUBJECT_STORE="subjectStore";
     public final static String PAINTS="paints";
     public final static String SUBJECT_INDEX="subjectIndex";
@@ -48,6 +62,8 @@ public abstract class AbstractFSUIConfig implements FSUIConfig{
     protected  Map<String,AbstractPaint> paints=new LinkedHashMap();
     protected  Map<String,PaintConfig> paintConfigs=new LinkedHashMap();
 
+    public AbstractFSUIConfig(){
+    }
     /**
      *主题索引。Key为组件名，Value为主题ID 
      */  
@@ -117,33 +133,71 @@ public abstract class AbstractFSUIConfig implements FSUIConfig{
    }
     @Override
     public boolean writeConfig(){
+           
         return writeConfig(FSUIConfig.configName);
     }
     
     @Override
     public boolean readConfig(String filePathName){
-        if (filePathName==null ||  "".equals(filePathName)) return false;
-        File f=new File(filePathName);
-        if(!f.exists()) {
-            if (fileChooser==null) fileChooser=new JFileChooser();
-            FileNameExtensionFilter  ff=
-                new FileNameExtensionFilter ("json file",
-                "json","js" 
-            );
-            fileChooser.addChoosableFileFilter(ff); 
-            int returnVal = fileChooser.showOpenDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                f=fileChooser.getSelectedFile();   
-                filePathName=f.getName();
-            }
+        Logger log = Logger.getLogger(AbstractFSUIConfig.class.getName());  
+        log.setLevel(Level.INFO);  
+          
+        FileHandler fileHandler = null;  
+        try {
+            fileHandler = new FileHandler("E:/testlog%g.log", true);
+        } catch (IOException ex) {
+            Logger.getLogger(AbstractFSUIConfig.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(AbstractFSUIConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return readConfigImpl(filePathName);
+        fileHandler.setLevel(Level.SEVERE);  
+        fileHandler.setFormatter(new Formatter(){  
+            public String format(LogRecord record)  {  
+                SimpleDateFormat sd = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss]");    
+                String d = sd.format(new Date());    
+                return d + record.getLevel() + ":" + record.getMessage() + "/n";  
+            }  
+         });  
+        log.addHandler(fileHandler);  
+        try {
+            if (filePathName==null ||  "".equals(filePathName)) return false;
+            URI uri = (ClassLoader.getSystemResource("")).toURI();
+            String ss=uri.getPath();
+            String[] strs=ss.split("/\\w*/\\w*/\\w*\\w*$");
+            File f=new File(strs[0]+"/"+filePathName);
+            if(!f.exists()) {
+                if (fileChooser==null) fileChooser=new JFileChooser();
+                FileNameExtensionFilter  ff=
+                    new FileNameExtensionFilter ("json file",
+                    "json","js" 
+                );
+                fileChooser.addChoosableFileFilter(ff); 
+                int returnVal = fileChooser.showOpenDialog(null);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    f=fileChooser.getSelectedFile();
+                    filePathName=f.getName();
+                }
+            }
+            return readConfigImpl(filePathName);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(AbstractFSUIConfig.class.getName()).log(Level.SEVERE, null, ex);
+            StringWriter sw = new StringWriter();  
+            ex.printStackTrace(new PrintWriter(sw));  
+            log.severe(sw.toString());  
+            return false;
+        }
+        
     }
     @Override
     public boolean writeConfig(String filePathName){
         if (filePathName==null ||  "".equals(filePathName)) return false;
-        File f=new File(filePathName);
-        if(f.exists()) f.delete();
+        String[] strs=filePathName.split("/\\w*\\.\\w*$");
+       
+        File f=new File(strs[0]);
+        if(!f.exists()){            
+            f.mkdirs();
+        }   
+  
         return writeConfigImpl(filePathName);
     }
    

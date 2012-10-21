@@ -17,17 +17,26 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.fswingui.plaf.SubjectEntity;
 import org.fswingui.plaf.UIEngine;
 import org.fswingui.plaf.tools.paint.AbstractPaint;
+import org.fswingui.tools.frame.part.extra.StylePanelExtra;
+import org.fswingui.utilities.Utility;
 
 /**
  *
@@ -38,7 +47,7 @@ public class JsonConfig extends AbstractFSUIConfig{
     
     @Override
     public boolean writeConfigImpl(String filePathName) {
-        
+                
         boolean bl=false;
         toConfig(super.subjectStore);
         
@@ -53,12 +62,28 @@ public class JsonConfig extends AbstractFSUIConfig{
         OutputStreamWriter osw=null;
         try {                        
             try {
+                
+//                FileOutputStream o=new java.io.FileOutputStream(new File(filePathName));
+//                osw = new OutputStreamWriter(o,"UTF-8");
                 osw = new OutputStreamWriter(new FileOutputStream(filePathName,true),"UTF-8");
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(JsonConfig.class.getName()).log(Level.SEVERE, null, ex);
+                Logger log = Logger.getLogger(JsonConfig.class.getName());  
+                log.setLevel(Level.INFO);  
+                log.addHandler(Utility.getMyFileHandler("F:/testlog%g.log"));  
+                StringWriter sw = new StringWriter();  
+                ex.printStackTrace(new PrintWriter(sw));  
+                log.severe(sw.toString());  
+                Logger.getLogger(StylePanelExtra.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(JsonConfig.class.getName()).log(Level.SEVERE, null, ex);
+            Logger log = Logger.getLogger(JsonConfig.class.getName());  
+            log.setLevel(Level.INFO);  
+            log.addHandler(Utility.getMyFileHandler("F:/testlog%g.log"));  
+            StringWriter sw = new StringWriter();  
+            ex.printStackTrace(new PrintWriter(sw));  
+            log.severe(sw.toString());  
+            Logger.getLogger(StylePanelExtra.class.getName()).log(Level.SEVERE, null, ex);
         }
          
          
@@ -77,6 +102,13 @@ public class JsonConfig extends AbstractFSUIConfig{
                     osw.close();   
                     return bl;
                 } catch (IOException e) {
+                    Logger log = Logger.getLogger(JsonConfig.class.getName());  
+                    log.setLevel(Level.INFO);  
+                    log.addHandler(Utility.getMyFileHandler("F:/testlog%g.log"));  
+                    StringWriter sw = new StringWriter();  
+                    e.printStackTrace(new PrintWriter(sw));  
+                    log.severe(sw.toString());  
+                    Logger.getLogger(StylePanelExtra.class.getName()).log(Level.SEVERE, null, e);
                 } 			
             }
         }
@@ -92,8 +124,10 @@ public class JsonConfig extends AbstractFSUIConfig{
                 isr = new InputStreamReader(new FileInputStream(filePathName),"UTF-8");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(JsonConfig.class.getName()).log(Level.SEVERE, null, ex);
+               
             }
         } catch (UnsupportedEncodingException ex) {
+             
             Logger.getLogger(JsonConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
           

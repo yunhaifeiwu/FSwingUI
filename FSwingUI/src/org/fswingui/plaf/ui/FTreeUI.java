@@ -4,31 +4,18 @@
  */
 package org.fswingui.plaf.ui;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JTree;
-import javax.swing.ListCellRenderer;
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
 import javax.swing.plaf.basic.BasicTreeUI;
-import javax.swing.plaf.metal.MetalTreeUI;
 import javax.swing.tree.AbstractLayoutCache;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import org.fswingui.plaf.UIEngine;
 import org.fswingui.plaf.tools.paint.AbstractPaint;
-import org.fswingui.plaf.tools.paint.expand.CrystalPaint;
 import org.fswingui.plaf.ui.modify.DefaultTreeCellRendererM;
-import sun.swing.DefaultLookup;
+
 
 /**
  *

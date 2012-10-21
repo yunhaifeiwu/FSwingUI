@@ -6,7 +6,7 @@ package org.fswingui.plaf.tools.paint;
 
 import java.awt.Color;
 import java.awt.Font;
-import org.fswingui.utility.Utility;
+import org.fswingui.utilities.Utility;
 import org.fswingui.plaf.tools.paint.Parameter;
 import org.fswingui.plaf.tools.paint.ParameterCoding;
 

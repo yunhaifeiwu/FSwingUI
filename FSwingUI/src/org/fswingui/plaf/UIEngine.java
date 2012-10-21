@@ -49,6 +49,7 @@ import org.fswingui.plaf.ui.FTableHeaderUI;
 import org.fswingui.plaf.ui.FTreeUI;
 import sun.swing.SwingUtilities2;
 
+
 /**
  * 1 对于获得SubjectModel 要么 <br/>
  *     通过组件名得到subjectID或通过类名得到SubjectID，然后在UIManger中取得〈br/>
@@ -450,6 +451,7 @@ public class UIEngine {
                 g2.setComposite(alpha2);
 
                 g2.setColor(c.getForeground());
+                 
                 SwingUtilities2.drawStringUnderlineCharAt(c, g,text, -1,
                     textRect.x ,textRect.y + fm.getAscent() 
                 );      

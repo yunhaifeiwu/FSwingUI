@@ -6,7 +6,6 @@ package org.fswingui.plaf.ui;
 
  
 import java.awt.BasicStroke;
-import sun.swing.SwingUtilities2;
 import sun.awt.AppContext;
 
  
