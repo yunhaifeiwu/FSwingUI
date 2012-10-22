@@ -35,7 +35,6 @@ import javax.swing.JOptionPane;
 import org.fswingui.plaf.SubjectEntity;
 import org.fswingui.plaf.UIEngine;
 import org.fswingui.plaf.tools.paint.AbstractPaint;
-import org.fswingui.tools.frame.part.extra.StylePanelExtra;
 import org.fswingui.utilities.Utility;
 
 /**
@@ -61,7 +60,7 @@ public class JsonConfig extends AbstractFSUIConfig{
         OutputStreamWriter osw=null;
         try {                        
             try {
-                 osw = new OutputStreamWriter(new FileOutputStream(filePathName,true),"UTF-8");
+                 osw = new OutputStreamWriter(new FileOutputStream(filePathName),"UTF-8");
 //                FileOutputStream o=new java.io.FileOutputStream(new File(filePathName));
 //                osw = new OutputStreamWriter(o,"UTF-8");
 //                osw = new OutputStreamWriter(new FileOutputStream(filePathName,true),"UTF-8");

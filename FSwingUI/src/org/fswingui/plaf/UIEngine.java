@@ -152,8 +152,30 @@ public class UIEngine {
      */
     public static void setStyleMainColor(ConcurrentHashMap<String, Color> styleMainColor) {
         UIEngine.styleMainColor = styleMainColor;
+        
+    }
+
+    public static Color getCurrentMainColor() {
+        return currentMainColor;
+    }
+
+    public static void setCurrentMainColor(Color currentMainColor) {
+        UIEngine.currentMainColor = currentMainColor;
+        UIManager.put(UIEngine.CURRENT_COLOR,  currentMainColor);   
+    }
+
+    public static String getCurrentStyle() {
+        return currentStyle;
+    }
+
+    public static void setCurrentStyle(String currentStyle) {
+        UIEngine.currentStyle = currentStyle;
+        UIManager.put(UIEngine.CURRENT_STYLEID, currentStyle );
     }
     
+    
+        
+          
     
    //</editor-fold>
     

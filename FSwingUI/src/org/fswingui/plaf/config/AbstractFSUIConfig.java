@@ -41,8 +41,6 @@ import org.fswingui.plaf.UIEngine;
 import org.fswingui.plaf.tools.paint.AbstractPaint;
 import org.fswingui.plaf.tools.paint.BaseParameterCoding;
 import org.fswingui.plaf.tools.paint.Parameter;
-import org.fswingui.tools.frame.model.config.FGuiConfig;
-import org.fswingui.tools.frame.part.extra.StylePanelExtra;
 import org.fswingui.utilities.Utility;
 
 /**
@@ -147,8 +145,7 @@ public abstract class AbstractFSUIConfig implements FSUIConfig{
     public boolean readConfig(String filePathName){
        
   
-            if (filePathName==null ||  "".equals(filePathName)) return false;
-            JsonConfig.test1("AbstractFSUIConfig======read==file==前");
+            if (filePathName==null ||  "".equals(filePathName)) return false;            
             
             File f=new File(filePathName);
             if(!f.exists()) {
@@ -164,7 +161,7 @@ public abstract class AbstractFSUIConfig implements FSUIConfig{
                     filePathName=f.getName();
                 }
             }
-            JsonConfig.test1("AbstractFSUIConfig======readConfigImpl==前");
+            
             return readConfigImpl(filePathName);
         
         
