@@ -172,6 +172,14 @@ public class UIEngine {
         UIEngine.currentStyle = currentStyle;
         UIManager.put(UIEngine.CURRENT_STYLEID, currentStyle );
     }
+
+    public static ColorModel getColorModel() {
+        return colorModel;
+    }
+
+    public static void setColorModel(ColorModel colorModel) {
+        UIEngine.colorModel = colorModel;
+    }
     
     
         
